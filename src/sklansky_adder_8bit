@@ -16,7 +16,14 @@
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments: unoptimized basic clone
+// Additional Comments: unoptimized basic clone, 
+// Modifications:
+//  line 36 mod to remove list carry_in, carry_out
+//  line 37 mod to remove signal carry_in
+//  line 41 mod to remove signal carry_out
+//  line 48 mod to set input carry signal to zero
+//  line 94 mod to discard carry out 
+//
 // from fluffybird2323 generator
 // https://github.com/fluffybird2323/n-bit-sklansky-adder-code-generator-notebook/blob/master/README.Black
 //////////////////////////////////////////////////////////////////////////////////
@@ -29,18 +36,20 @@ It builds recursively 2-bit adders then 4-bit adders, 8-bit adders,
 16-bit adder and so on by abutting each time two smaller adders. 
 */
 
-module sklansky_adder_8bit(carry_in,a,b,sum,carry_out);
-input carry_in;
+// module sklansky_adder_8bit(carry_in,a,b,sum,carry_out);
+module sklansky_adder_8bit(a,b,sum);
+// input carry_in;
 input [7:0] a;
 input [7:0] b;
 output [7:0] sum;
-output carry_out;
+// output carry_out;
 
 // declare array wires
 wire [8:0] g [8:0];
 wire [8:0] p [8:0];
 
-assign g[0][0]=carry_in;
+// assign g[0][0]=carry_in;
+assign g[0][0]=1'b0;
 assign p[0][0]=1'b0;
 	
 	generate_propagate GeneratePropagate_00(a[0],b[0],g[1][1],p[1][1]);
@@ -84,7 +93,7 @@ assign p[0][0]=1'b0;
 	assign sum[5]=g[5][0]^p[6][6];
 	assign sum[6]=g[6][0]^p[7][7];
 	assign sum[7]=g[7][0]^p[8][8];
-	assign carry_out=(g[7][0]&p[8][8])|g[8][8];
+//	assign carry_out=(g[7][0]&p[8][8])|g[8][8];
 	
 endmodule
 
