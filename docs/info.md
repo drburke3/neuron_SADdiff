@@ -9,11 +9,11 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+asychronous comparison for SAD of input and threshold
 
 ## How to test
 
-Explain how to use your project
+present two one byte values (vary times for asynch testing)
 
 ## External hardware
 
