@@ -38,7 +38,7 @@ It builds recursively 2-bit adders then 4-bit adders, 8-bit adders,
 
 // change module name
 // module tt_um_drburke3_neuron_sklansky_adder_8bit(carry_in,a,b,sum,carry_out);
-module tt_um_drburke3_neuron_sklansky_adder_8bit(a,b,sum);
+module tt_um_drburke3_neuron_top(a,b,sum);
 // input carry_in;
 input [7:0] a;
 input [7:0] b;
