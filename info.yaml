@@ -15,7 +15,7 @@ project:
   
   # List your project's source files here. Source files must be in ./src and you must list each source file separately, one per line:
   source_files:        
-    - "tt_um_drburke3_neuron_sklansky_adder_8bit.v"
+    - "boo_tt_um_drburke3_neuron_sklansky_adder_8bit.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
