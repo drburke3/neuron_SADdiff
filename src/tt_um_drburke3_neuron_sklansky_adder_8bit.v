@@ -3,10 +3,10 @@
 // Company: Berkeley Neuromorphic
 // Engineer: Daniel Burke
 // 
-// Create Date: 04/08/2024 10:16:27 AM
+// Create Date: 09/14/2022 10:16:27 AM
 // Design Name: 
 // Module Name: sklansky_adder_8bit
-// Project Name: neuron_SADdiff
+// Project Name: 
 // Target Devices: 
 // Tool Versions: 
 // Description: 8-bit generated fast adder with black, gray, and generate-propagate included at bottom
@@ -16,16 +16,8 @@
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments: unoptimized basic clone, 
-// Modifications:
-//  line 36 mod to remove list carry_in, carry_out
-//  line 37 mod to remove signal carry_in
-//  line 41 mod to remove signal carry_out
-//  line 48 mod to set input carry signal to zero
-//  line 94 mod to discard carry out 
-//
-// from fluffybird2323 generator
-// https://github.com/fluffybird2323/n-bit-sklansky-adder-code-generator-notebook/blob/master/README.Black
+// Additional Comments:
+// for this applicaton Sklansky fast enough with fewest gates
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -36,18 +28,17 @@ It builds recursively 2-bit adders then 4-bit adders, 8-bit adders,
 16-bit adder and so on by abutting each time two smaller adders. 
 */
 
-module tt_um_drburke3_neuron_sklansky_adder_8bit(a,b,sum);
-// input carry_in;
+module sklansky_adder_8bit(rst,clk,start,a,b,sum);
+input rst,clk,start;
 input [7:0] a;
 input [7:0] b;
-output [7:0] sum;
-// output carry_out;
+output[7:0] sum;
+reg [7:0] sum;
 
 // declare array wires
 wire [8:0] g [8:0];
 wire [8:0] p [8:0];
 
-// assign g[0][0]=carry_in;
 assign g[0][0]=1'b0;
 assign p[0][0]=1'b0;
 	
@@ -84,15 +75,24 @@ assign p[0][0]=1'b0;
 /// Level 4: (if carry out needed)
 ///	gray cell_4_8(g[8][8],p[8][8],g[7][0],g[8][0]);
 
-    assign sum[0]=g[0][0]^p[1][1];
-	assign sum[1]=g[1][0]^p[2][2];
-	assign sum[2]=g[2][0]^p[3][3];
-	assign sum[3]=g[3][0]^p[4][4];
-	assign sum[4]=g[4][0]^p[5][5];
-	assign sum[5]=g[5][0]^p[6][6];
-	assign sum[6]=g[6][0]^p[7][7];
-	assign sum[7]=g[7][0]^p[8][8];
-//	assign carry_out=(g[7][0]&p[8][8])|g[8][8];
+always @(posedge clk)
+begin
+    if(rst == 1'b1)
+        begin
+            sum = 8'b00000000;      
+        end 
+    else if(start == 1'b1)
+        begin
+           	sum[0] <= g[0][0]^p[1][1];
+		sum[1] <= g[1][0]^p[2][2];
+	       	sum[2] <= g[2][0]^p[3][3];
+	      	sum[3] <= g[3][0]^p[4][4];
+	       	sum[4] <= g[4][0]^p[5][5];
+	       	sum[5] <= g[5][0]^p[6][6];
+	       	sum[6] <= g[6][0]^p[7][7];
+	       	sum[7] <= g[7][0]^p[8][8];   
+        end 
+end
 	
 endmodule
 
