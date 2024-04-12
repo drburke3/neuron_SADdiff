@@ -28,8 +28,8 @@ It builds recursively 2-bit adders then 4-bit adders, 8-bit adders,
 16-bit adder and so on by abutting each time two smaller adders. 
 */
 
-module tt_um_drburke3_neuron_sklansky_adder_8bit(rst,clk,start,a,b,sum);
-input rst,clk,start;
+module tt_um_drburke3_neuron_sklansky_adder_8bit(rst_n,clk,ena,a,b,sum);
+input rst_n,clk,ena;
 input [7:0] a;
 input [7:0] b;
 output[7:0] sum;
@@ -77,11 +77,11 @@ assign p[0][0]=1'b0;
 
 always @(posedge clk)
 begin
-    if(rst == 1'b1)
+	if(rst_n == 1'b0)
         begin
             sum = 8'b00000000;      
         end 
-    else if(start == 1'b1)
+	else if(ena == 1'b0)
         begin
            	sum[0] <= g[0][0]^p[1][1];
 		sum[1] <= g[1][0]^p[2][2];
