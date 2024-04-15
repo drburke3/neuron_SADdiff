@@ -28,23 +28,37 @@ It builds recursively 2-bit adders then 4-bit adders, 8-bit adders,
 16-bit adder and so on by abutting each time two smaller adders. 
 */
 
-module tt_um_drburke3_neuron_sklansky_adder_8bit(rst_n,clk,ena,a,b,sum);
-input rst_n,clk,ena;
-input [7:0] a;
-input [7:0] b;
-output[7:0] sum;
-reg [7:0] sum;
+module tt_um_drburke3_neuron_sklansky_adder_8bit(ui_in,uo_out,uio_in,uio_out,uio_oe,rst_n,clk,ena);
+input [7:0] ui_in;
+output [7:0] uo_out;
+input [7:0] uio_in;
+output [7:0] uio_out;
+output [7:0] uio_oe;
+input rst_n;
+input clk;
+input ena;
+
+assign a=ui_in;
+assign sum=uio_out;
+assign b=ui_in;
+assign uio_out=8'b1;
+assign uio_oe=8'b0;
+
+
+
+
 
 // declare array wires
 wire [8:0] g [8:0];
 wire [8:0] p [8:0];
 
+//reg [7:0] a [7:0] ui_in;
 assign g[0][0]=1'b0;
 assign p[0][0]=1'b0;
 	
 	generate_propagate GeneratePropagate_00(a[0],b[0],g[1][1],p[1][1]);
 	generate_propagate GeneratePropagate_01(a[1],b[1],g[2][2],p[2][2]);
-    	generate_propagate GeneratePropagate_02(a[2],b[2],g[3][3],p[3][3]);
+    generate_propagate GeneratePropagate_02(a[2],b[2],g[3][3],p[3][3]);
 	generate_propagate GeneratePropagate_03(a[3],b[3],g[4][4],p[4][4]);
 	generate_propagate GeneratePropagate_04(a[4],b[4],g[5][5],p[5][5]);
 	generate_propagate GeneratePropagate_05(a[5],b[5],g[6][6],p[6][6]);
@@ -84,7 +98,7 @@ begin
 	else if(ena == 1'b0)
         begin
            	sum[0] <= g[0][0]^p[1][1];
-		sum[1] <= g[1][0]^p[2][2];
+		    sum[1] <= g[1][0]^p[2][2];
 	       	sum[2] <= g[2][0]^p[3][3];
 	      	sum[3] <= g[3][0]^p[4][4];
 	       	sum[4] <= g[4][0]^p[5][5];
